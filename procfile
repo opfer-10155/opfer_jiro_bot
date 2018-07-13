@@ -1,1 +1,2 @@
 bot: ruby main.rb
+ https://devcenter.heroku.com/articles/ruby-default-web-server
