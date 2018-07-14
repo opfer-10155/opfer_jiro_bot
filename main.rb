@@ -28,7 +28,7 @@ client_streaming = Twitter::Streaming::Client.new do |config|
       puts("-----")
       z = random.rand(1..114514)
     
-     if /#オプファーは二郎を奢れ/ =~ tweet.text
+     if /#オプファーは二郎を奢れ/ =~ tweet.text && !tweet.index("RT")
 
       if z == 810
         client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
