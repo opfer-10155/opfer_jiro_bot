@@ -33,6 +33,7 @@ client_streaming = Twitter::Streaming::Client.new do |config|
       timesail = random.rand(1..810)
     
       if timesail == 810
+
         client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
 
       else  client.update("@#{tweet.user.screen_name}\n奢りません", options = {:in_reply_to_status_id => tweet.id})
