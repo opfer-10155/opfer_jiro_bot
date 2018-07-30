@@ -6,17 +6,17 @@ Dotenv.load
 random = Random.new
 
 client = Twitter::REST::Client.new do |config|
-    config.consumer_key        = 	ENV["LSVzWsXghGep2a2GVCpaw83Ej"]
-    config.consumer_secret     = 	ENV["zUQRTAv7kovDEi3Jks2GJ4UO0sIkVhxs8bmFHqdCngLFCsg1bM"]
-    config.access_token        = 	ENV["3094838904-OofN3rhmGSFBfShZXUbDIYUb4Mo38yDZwk4HbmT"]
-    config.access_token_secret = ENV["FbhgZzLuxXYq4fJo9kkQgVz1QTYQ43tZxvbaDkdRSB8RJ"]
+  config.consumer_key        = ENV['MY_CONSUMER_KEY']        #Consumer Key (API Key)
+  config.consumer_secret     = ENV['MY_CONSUMER_SECRET']     #Consumer Secret (API Secret)
+  config.access_token        = ENV['MY_ACCESS_TOKEN']        #Access Token
+  config.access_token_secret = ENV['MY_ACCESS_TOKEN_SECRET'] #Access Token Secret
   end
 
-client_streaming = Twitter::Streaming::Client.new do |config|
-    config.consumer_key = ENV["LSVzWsXghGep2a2GVCpaw83Ej"]
-    config.consumer_secret = ENV["zUQRTAv7kovDEi3Jks2GJ4UO0sIkVhxs8bmFHqdCngLFCsg1bM"]
-    config.access_token = ENV["3094838904-OofN3rhmGSFBfShZXUbDIYUb4Mo38yDZwk4HbmT"]
-    config.access_token_secret =  ENV["FbhgZzLuxXYq4fJo9kkQgVz1QTYQ43tZxvbaDkdRSB8RJ"]
+client_streaming = Twitter::Streaming::Client.new do |config|    
+  config.consumer_key        = ENV['MY_CONSUMER_KEY']        #Consumer Key (API Key)
+  config.consumer_secret     = ENV['MY_CONSUMER_SECRET']     #Consumer Secret (API Secret)
+  config.access_token        = ENV['MY_ACCESS_TOKEN']        #Access Token
+  config.access_token_secret = ENV['MY_ACCESS_TOKEN_SECRET'] #Access Token Secret
   end
 
   client_streaming.user do |tweet|
