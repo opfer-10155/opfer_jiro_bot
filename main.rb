@@ -34,9 +34,9 @@ client_streaming = Twitter::Streaming::Client.new do |config|
     
       if timesail == 3
 
-        client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
+        client.update("@#{tweet.user.screen_name}\nT", options = {:in_reply_to_status_id => tweet.id})
 
-      else  client.update("@#{tweet.user.screen_name}\n奢りません", options = {:in_reply_to_status_id => tweet.id})
+      else  client.update("@#{tweet.user.screen_name}\nF", options = {:in_reply_to_status_id => tweet.id})
 
       end
 
