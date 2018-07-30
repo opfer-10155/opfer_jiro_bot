@@ -6,17 +6,17 @@ Dotenv.load
 random = Random.new
 
 client = Twitter::REST::Client.new do |config|
-    config.consumer_key        = ENV["MY_CONSUMER_KEY"]
-    config.consumer_secret     = ENV["MY_CONSUMER_SECRET"]
-    config.access_token        = ENV["MY_ACCESS_TOKEN"]
-    config.access_token_secret = ENV["MY_ACCESS_TOKEN_SECRET"]
+    config.consumer_key        = 	ENV["LSVzWsXghGep2a2GVCpaw83Ej"]
+    config.consumer_secret     = 	ENV["zUQRTAv7kovDEi3Jks2GJ4UO0sIkVhxs8bmFHqdCngLFCsg1bM"]
+    config.access_token        = 	ENV["3094838904-OofN3rhmGSFBfShZXUbDIYUb4Mo38yDZwk4HbmT"]
+    config.access_token_secret = ENV["FbhgZzLuxXYq4fJo9kkQgVz1QTYQ43tZxvbaDkdRSB8RJ"]
   end
 
 client_streaming = Twitter::Streaming::Client.new do |config|
-    config.consumer_key = ENV["MY_CONSUMER_KEY"]
-    config.consumer_secret = ENV["MY_CONSUMER_SECRET"]
-    config.access_token = ENV["MY_ACCESS_TOKEN"]
-    config.access_token_secret =  ENV["MY_ACCESS_TOKEN_SECRET"]
+    config.consumer_key = ENV["LSVzWsXghGep2a2GVCpaw83Ej"]
+    config.consumer_secret = ENV["zUQRTAv7kovDEi3Jks2GJ4UO0sIkVhxs8bmFHqdCngLFCsg1bM"]
+    config.access_token = ENV["3094838904-OofN3rhmGSFBfShZXUbDIYUb4Mo38yDZwk4HbmT"]
+    config.access_token_secret =  ENV["FbhgZzLuxXYq4fJo9kkQgVz1QTYQ43tZxvbaDkdRSB8RJ"]
   end
 
   client_streaming.user do |tweet|
@@ -29,14 +29,14 @@ client_streaming = Twitter::Streaming::Client.new do |config|
       
     
      if /#オプファーは二郎を奢れ/ =~ tweet.text
-      z = random.rand(1..810)
-      timesail = random.rand(1..5)
+      z = random.rand(1..260)
     
-      if timesail == 3
+      if ｚ == 19
 
-        client.update("@#{tweet.user.screen_name}\nT", options = {:in_reply_to_status_id => tweet.id})
+        client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
 
-      else  client.update("@#{tweet.user.screen_name}\nF", options = {:in_reply_to_status_id => tweet.id})
+      else  
+        client.update("@#{tweet.user.screen_name}\n奢りません", options = {:in_reply_to_status_id => tweet.id})
 
       end
 
