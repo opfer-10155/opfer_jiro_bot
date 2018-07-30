@@ -6,17 +6,17 @@ Dotenv.load
 random = Random.new
 
 client = Twitter::REST::Client.new do |config|
-    config.consumer_key        = ENV["MY_CONSUMER_KEY"]
-    config.consumer_secret     = ENV["MY_CONSUMER_SECRET"]
-    config.access_token        = ENV["MY_ACCESS_TOKEN"]
-    config.access_token_secret = ENV["MY_ACCESS_TOKEN_SECRET"]
+  config.consumer_key        = ENV['MY_CONSUMER_KEY']        #Consumer Key (API Key)
+  config.consumer_secret     = ENV['MY_CONSUMER_SECRET']     #Consumer Secret (API Secret)
+  config.access_token        = ENV['MY_ACCESS_TOKEN']        #Access Token
+  config.access_token_secret = ENV['MY_ACCESS_TOKEN_SECRET'] #Access Token Secret
   end
 
-client_streaming = Twitter::Streaming::Client.new do |config|
-    config.consumer_key = ENV["MY_CONSUMER_KEY"]
-    config.consumer_secret = ENV["MY_CONSUMER_SECRET"]
-    config.access_token = ENV["MY_ACCESS_TOKEN"]
-    config.access_token_secret =  ENV["MY_ACCESS_TOKEN_SECRET"]
+client_streaming = Twitter::Streaming::Client.new do |config|    
+  config.consumer_key        = ENV['MY_CONSUMER_KEY']        #Consumer Key (API Key)
+  config.consumer_secret     = ENV['MY_CONSUMER_SECRET']     #Consumer Secret (API Secret)
+  config.access_token        = ENV['MY_ACCESS_TOKEN']        #Access Token
+  config.access_token_secret = ENV['MY_ACCESS_TOKEN_SECRET'] #Access Token Secret
   end
 
   client_streaming.user do |tweet|
@@ -30,12 +30,13 @@ client_streaming = Twitter::Streaming::Client.new do |config|
     
      if /#オプファーは二郎を奢れ/ =~ tweet.text
       z = random.rand(1..260)
-    
+
       if z == 19
 
         client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
 
-      else  client.update("@#{tweet.user.screen_name}\n奢りません", options = {:in_reply_to_status_id => tweet.id})
+      else  
+        client.update("@#{tweet.user.screen_name}\n奢りません", options = {:in_reply_to_status_id => tweet.id})
 
       end
 
