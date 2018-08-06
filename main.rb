@@ -29,7 +29,7 @@ client_streaming = Twitter::Streaming::Client.new do |config|
       
     
      if /#オプファーは二郎を奢れ/ =~ tweet.text
-      z = random.rand(1..50)
+      z = random.rand(1..260)
 
       if z == 19
 
