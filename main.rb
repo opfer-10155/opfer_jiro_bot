@@ -13,7 +13,7 @@ client = Twitter::REST::Client.new do |config|
   end
   
   max_id = client.home_timeline.first.id
-  5.times do
+  2.times do
     client.home_timeline(max_id: max_id,count: 200).each do |tweet|
 
       puts(tweet.user.name)
@@ -23,7 +23,7 @@ client = Twitter::REST::Client.new do |config|
       max_id = tweet.id unless tweet.retweeted?
 
       if /#オプファーは二郎を奢れ/ =~ tweet.text
-        ogoru = random.rand(1..100)
+        ogoru = random.rand(1..200)
     
         if ogoru == 19
           client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
