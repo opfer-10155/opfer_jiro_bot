@@ -13,8 +13,8 @@ client = Twitter::REST::Client.new do |config|
 end
 
     max_id = client.home_timeline.first.id
-    5.times do
-      client.home_timeline(max_id: max_id,count: 200).each do |tweet|
+    10.times do
+      client.home_timeline(max_id: max_id,count: 50).each do |tweet|
 
         puts(tweet.user.name)
         puts("@#{tweet.user.screen_name}")
