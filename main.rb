@@ -13,7 +13,7 @@ client = Twitter::REST::Client.new do |config|
 end
 
     max_id = client.home_timeline.first.id
-    while 1 do
+    525600.times do
       client.home_timeline(max_id: max_id,count: 20).each do |tweet|
 
         puts(tweet.user.name)
