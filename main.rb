@@ -13,7 +13,7 @@ client = Twitter::REST::Client.new do |config|
 end
 
     max_id = client.home_timeline.first.id
-    1.times do
+    while 1 do
       client.home_timeline(max_id: max_id,count: 30).each do |tweet|
 
         puts(tweet.user.name)
@@ -30,13 +30,11 @@ end
   
           else  
 
-            File.open("./variety.text", "r") do |bot|
+            File.open("variety.txt", "r") do |bot|
               @bots = bot.read.split("\n")
+              hazure = @bots.sample
+              client.update("@#{tweet.user.screen_name}\n#{hazure}", options = {:in_reply_to_status_id => tweet.id})
             end
-            hazure = @bots.sample
-
-            client.update("@#{tweet.user.screen_name}\n#{hazure}", options = {:in_reply_to_status_id => tweet.id})
-  
           end
         end
       end
