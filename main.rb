@@ -14,7 +14,7 @@ end
 
     max_id = client.home_timeline.first.id
     while 1 do
-      client.home_timeline(max_id: max_id,count: 30).each do |tweet|
+      client.home_timeline(max_id: max_id,count: 20).each do |tweet|
 
         puts(tweet.user.name)
         puts("@#{tweet.user.screen_name}")
