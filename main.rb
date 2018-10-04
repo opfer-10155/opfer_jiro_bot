@@ -30,7 +30,7 @@ end
   
           else  
 
-            File.open("variety.text", "r") do |bot|
+            File.open("./variety.text", "r") do |bot|
               @bots = bot.read.split("\n")
             end
             hazure = @bots.sample
