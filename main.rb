@@ -16,32 +16,32 @@ end
     #max_id = client.home_timeline.first.id
     525600.times do
       define_since_id = true
-      client.home_timeline(since_id: since_id, count: 100).each do |tweet|
-        if !tweet.retweeted?
-        puts(tweet.user.name)
-        puts("@#{tweet.user.screen_name}")
-        puts(tweet.text)
-        puts("-----")
+      client.home_timeline(since_id: since_id, count: 1000).each do |tweet|
         if define_since_id
           since_id = tweet.id
           define_since_id = false
         end
         #max_id = tweet.id unless tweet.retweeted?
-
-        if /#オプファーは二郎を奢れ/ =~ tweet.text
-          ogoru = random.rand(1..100)
+        if !tweet.retweeted?
+          if /#オプファーは二郎を奢れ/ =~ tweet.text
+            ogoru = random.rand(1..100)
+            puts(ogoru)
+            puts(tweet.user.name)
+            puts("@#{tweet.user.screen_name}")
+            puts(tweet.text)
+            puts("-----")
+            if ogoru == 19
+              client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
           
-          if ogoru == 19
-            client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
-          
-          else  
+            else  
 
-            File.open("variety.txt", "r") do |bot|
-              @bots = bot.read.split("\n")
-              hazure = @bots.sample
-              client.update("@#{tweet.user.screen_name}\n#{hazure}", options = {:in_reply_to_status_id => tweet.id})
+              File.open("variety.txt", "r") do |bot|
+                @bots = bot.read.split("\n")
+                hazure = @bots.sample
+                client.update("@#{tweet.user.screen_name}\n#{hazure}", options = {:in_reply_to_status_id => tweet.id})
+                puts(hazure)
+              end
             end
-          end
           end
         end
       end
