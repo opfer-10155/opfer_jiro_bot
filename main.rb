@@ -29,7 +29,7 @@ end
         #max_id = tweet.id unless tweet.retweeted?
 
         if /#オプファーは二郎を奢れ/ =~ tweet.text
-          ogoru = random.rand(1..260)
+          ogoru = random.rand(1..100)
           
           if ogoru == 19
             client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
