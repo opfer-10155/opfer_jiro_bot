@@ -24,7 +24,7 @@ end
         #max_id = tweet.id unless tweet.retweeted?
         if !tweet.retweeted?
           if /#オプファーは二郎を奢れ/ =~ tweet.text
-            ogoru = random.rand(1..100)
+            ogoru = random.rand(1..200)
             puts(ogoru)
             puts(tweet.user.name)
             puts("@#{tweet.user.screen_name}")
