@@ -22,7 +22,7 @@ since_id = client.home_timeline.first.id
     end
     if !tweet.retweeted?
       if /#オプファーは二郎を奢れ/ =~ tweet.text
-        ogoru = random.rand(1..200)
+        ogoru = random.rand(1..125)
         if ogoru == 19
           client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
       
