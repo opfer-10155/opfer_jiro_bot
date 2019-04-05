@@ -1,0 +1,24 @@
+{
+  "name": "opfer_jiro_bot",
+  "version": "1.0.0",
+  "description": "opfer jiro bot",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc src/scripts/app.ts",
+    "test": "npm run build && node src/scripts/app.js",
+    "start": "npm run build && forever src/scripts/app.js"
+  },
+  "keywords": [],
+  "author": "opfer_10155",
+  "license": "ISC",
+  "dependencies": {
+    "@types/twitter": "^1.7.0",
+    "forever": "^0.15.3",
+    "fs": "0.0.1-security",
+    "twitter": "^1.7.1"
+  },
+  "engines": {
+    "node": "10.14.1",
+    "npm":  "6.9.0"
+  }
+}

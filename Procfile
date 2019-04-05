@@ -1,1 +1,1 @@
-bot: ruby main.rb
+bot: npm run start

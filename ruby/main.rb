@@ -12,10 +12,13 @@ client = Twitter::REST::Client.new do |config|
     config.access_token_secret =  "zV2T5YY1E20Bf2zrKlTmfARBeXiRcPhSKCzmfbZ0pw4M0"
 end
 
+puts("start")
 since_id = client.home_timeline.first.id
 525600.times do
   define_since_id = true
+  puts("hello")
   client.home_timeline(since_id: since_id, count: 1000).each do |tweet|
+    puts(tweet.text)
     if define_since_id
       since_id = tweet.id
       define_since_id = false
@@ -25,8 +28,8 @@ since_id = client.home_timeline.first.id
         ogoru = random.rand(1..125)
         if ogoru == 19
           client.update("@#{tweet.user.screen_name}\n奢ります", options = {:in_reply_to_status_id => tweet.id})
-      
-        else  
+
+        else
 
           File.open("variety.txt", "r") do |bot|
             @bots = bot.read.split("\n")
