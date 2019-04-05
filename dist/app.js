@@ -12,7 +12,6 @@ var atari = 26; // アタリの数字
 var since_id = undefined;
 var unresolved = [];
 var phrases = fs.readFileSync('src/phrase/variety.text', { encoding: 'utf-8' }).split('\n');
-var sample_tweets = JSON.parse(fs.readFileSync('sample.json', { encoding: 'utf-8' }));
 var client = new Twitter({
     consumer_key: process.env.MY_CONSUMER_KEY,
     consumer_secret: process.env.MY_CONSUMER_SECRET,
@@ -26,7 +25,7 @@ var timer2 = setInterval(function () { tweet_count = 0; }, 60 * 1000 * 300);
 var timer3 = setInterval(function () {
     resolveTweets();
     getTL(client)
-        .then(function () { main(sample_tweets); })["catch"](function (e) { console.error(e); });
+        .then(function (tweets) { main(tweets); })["catch"](function (e) { console.error(e); });
 }, 60 * 1000);
 var timer4 = setInterval(function () { whisper(client); }, 60 * 1000 * 24);
 function main(tweets) {
