@@ -4,8 +4,6 @@
   "description": "opfer jiro bot",
   "main": "app.js",
   "scripts": {
-    "build": "tsc src/scripts/app.ts",
-    "test": "npm run build && node src/scripts/app.js",
     "start": "forever dist/app.js"
   },
   "keywords": [],
