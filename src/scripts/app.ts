@@ -7,14 +7,15 @@ const limit_get_timeline_per_15min = 15;
 let tweet_count = 0;
 let getTL_count = 0;
 
-const keywords   = ['#オプファーは二郎を奢れ', 'オプファーは歌志軒を奢れ'];
-const max        = 100; // 確率の分母
+const keywords   = ['#オプファーは二郎を奢れ', '#オプファーは歌志軒を奢れ'];
+const max        = 125; // 確率の分母
 const atari      = 26; // アタリの数字
 let since_id     = undefined;
 const unresolved = [];
+let resolved: number[] = [];
+
 
 const phrases = fs.readFileSync('src/phrase/variety.text', { encoding: 'utf-8' }).split('\n');
-const sample_tweets = JSON.parse(fs.readFileSync('sample.json', { encoding: 'utf-8' }));
 
 const client = new Twitter({
   consumer_key        : process.env.MY_CONSUMER_KEY,
@@ -32,7 +33,10 @@ const timer1 = setInterval(
 );
 
 const timer2 = setInterval(
-  () => { tweet_count = 0; },
+  () => {
+    tweet_count = 0;
+    resolved = [];
+  },
   60 * 1000 * 300
 )
 
@@ -40,7 +44,7 @@ const timer3 = setInterval(
   () => {
     resolveTweets();
     getTL(client)
-    .then(       () => { main(sample_tweets) })
+    .then( (tweets) => { main(tweets)        })
     .catch((e: any) => { console.error(e)    })
   },
   60 * 1000
@@ -48,7 +52,7 @@ const timer3 = setInterval(
 
 const timer4 = setInterval(
   () => { whisper(client) },
-  60 * 1000 * 24
+  60 * 1000 * 60 * 12
 )
 
 function main (tweets: Twitter.ResponseData) {
@@ -68,8 +72,10 @@ function main (tweets: Twitter.ResponseData) {
     if (findKeyword(tweet.text) && !tweet.retweeted) {
 
       if (tweet_count < limit_tweet_per_3h) {
-        if (atari === randamInt(max)) { reply(client, '奢ります', tweet); }
-        else                          { reply(client, randomPhrase(), tweet); }
+        if(resolved.indexOf(tweet.id) == -1) {
+          if (atari === randamInt(max)) { reply(client, '奢ります', tweet); }
+          else                          { reply(client, randomPhrase(), tweet); }
+        }
       }
       else { unresolved.push(tweet) }
     }
@@ -93,6 +99,7 @@ function resolveTweets () {
 
 function reply (client: Twitter, message : string, tweet: any) {
   tweet_count++;
+  resolved.push(tweet.id);
   client.post('statuses/update', {
       status: message, 
       in_reply_to_status_id: tweet.id_str,
