@@ -11,10 +11,9 @@ const keywords   = ['#オプファーは二郎を奢れ', '#オプファーは�
 const max        = 125; // 確率の分母
 const atari      = 26; // アタリの数字
 let since_id     = undefined;
-const unresolved = [];
-let resolved: number[] = [];
 
-
+const unreplied       = [];
+let replied: number[] = [];
 const phrases = fs.readFileSync('src/phrase/variety.text', { encoding: 'utf-8' }).split('\n');
 
 const client = new Twitter({
@@ -35,7 +34,7 @@ const timer1 = setInterval(
 const timer2 = setInterval(
   () => {
     tweet_count = 0;
-    resolved = [];
+    if (replied.length >= 200) { replied = []; }
   },
   60 * 1000 * 300
 )
@@ -44,8 +43,8 @@ const timer3 = setInterval(
   () => {
     resolveTweets();
     getTL(client)
-    .then( (tweets) => { main(tweets)        })
-    .catch((e: any) => { console.error(e)    })
+    .then( (tweets) => { main(tweets)     })
+    .catch((e: any) => { console.error(e) })
   },
   60 * 1000
 );
@@ -57,49 +56,40 @@ const timer4 = setInterval(
 
 function main (tweets: Twitter.ResponseData) {
 
-  let tmp = new Date('December 17, 1995 03:24:00');
-
   tweets.forEach((tweet: any) => {
-
-    // save tweet_id which is most recent
-    const tweet_day = new Date(tweet.created_at);
-    if (tweet_day > tmp) {
-      since_id = tweet.id;
-      tmp = tweet_day;
-    }
 
     // whether keyword exist in tweet or not
     if (findKeyword(tweet.text) && !tweet.retweeted) {
 
       if (tweet_count < limit_tweet_per_3h) {
-        if(resolved.indexOf(tweet.id) == -1) {
+        if(replied.indexOf(tweet.id) == -1) {
           if (atari === randamInt(max)) { reply(client, '奢ります', tweet); }
           else                          { reply(client, randomPhrase(), tweet); }
         }
       }
-      else { unresolved.push(tweet) }
+      else { unreplied.push(tweet) }
     }
   })
 }
 
-// unresolvedのtweet群を処理
+// unrepliedのtweet群を処理
 function resolveTweets () {
 
-  unresolved.forEach((tweet) => {
+  unreplied.forEach((tweet) => {
 
     if (tweet_count < limit_tweet_per_3h) {
 
       if (atari === randamInt(max)) { reply(client, '奢ります', tweet); }
       else                          { reply(client, randomPhrase(), tweet); }
 
-      unresolved.splice(unresolved.indexOf(tweet), 1);
+      unreplied.splice(unreplied.indexOf(tweet), 1);
     }
   })
 }
 
 function reply (client: Twitter, message : string, tweet: any) {
   tweet_count++;
-  resolved.push(tweet.id);
+  replied.push(tweet.id);
   client.post('statuses/update', {
       status: message, 
       in_reply_to_status_id: tweet.id_str,
