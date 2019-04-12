@@ -14,6 +14,7 @@ let since_id     = undefined;
 
 const unreplied       = [];
 let replied: number[] = [];
+let replied_buffer: number[] = [];
 const phrases = fs.readFileSync('src/phrase/variety.text', { encoding: 'utf-8' }).split('\n');
 
 const client = new Twitter({
@@ -34,7 +35,10 @@ const timer1 = setInterval(
 const timer2 = setInterval(
   () => {
     tweet_count = 0;
-    if (replied.length >= 200) { replied = []; }
+    if (replied.length >= 200) {
+      replied_buffer = replied;
+      replied = [];
+    }
   },
   60 * 1000 * 300
 )
@@ -62,7 +66,7 @@ function main (tweets: Twitter.ResponseData) {
     if (findKeyword(tweet.text) && !tweet.retweeted) {
 
       if (tweet_count < limit_tweet_per_3h) {
-        if(replied.indexOf(tweet.id) == -1) {
+        if(!isResolved(tweet.id)) {
           if (atari === randamInt(max)) { reply(client, '奢ります', tweet); }
           else                          { reply(client, randomPhrase(), tweet); }
         }
@@ -137,4 +141,8 @@ function findKeyword (text: string) {
     }
   }
   return false
+}
+
+function isResolved (id: number) {
+  return replied.indexOf(id) > -1 || replied_buffer.indexOf(id) > -1
 }
