@@ -14,8 +14,7 @@ let since_id     = undefined;
 
 const unreplied       = [];
 let replied: number[] = [];
-let replied_buffer: number[] = [];
-const phrases = fs.readFileSync('src/phrase/variety.text', { encoding: 'utf-8' }).split('\n');
+const phrases = fs.readFileSync('src/phrase/variety.text', { encoding: 'utf-8' }).split('$');
 
 const client = new Twitter({
   consumer_key        : process.env.MY_CONSUMER_KEY,
@@ -24,23 +23,14 @@ const client = new Twitter({
   access_token_secret : process.env.MY_ACCESS_TOKEN_SECRET
 });
 
-
 const timer1 = setInterval(
-  () => {
-    getTL_count = 0;
-  }, 
+  () => { getTL_count = 0; },
   60 * 1000 * 15
 );
 
 const timer2 = setInterval(
-  () => {
-    tweet_count = 0;
-    if (replied.length >= 200) {
-      replied_buffer = replied;
-      replied = [];
-    }
-  },
-  60 * 1000 * 300
+  () => { tweet_count = 0; },
+  60 * 1000 * 60 * 3
 )
 
 const timer3 = setInterval(
@@ -93,7 +83,7 @@ function resolveTweets () {
 
 function reply (client: Twitter, message : string, tweet: any) {
   tweet_count++;
-  replied.push(tweet.id);
+  insertToArray(replied, tweet.id)
   client.post('statuses/update', {
       status: message, 
       in_reply_to_status_id: tweet.id_str,
@@ -144,5 +134,12 @@ function findKeyword (text: string) {
 }
 
 function isResolved (id: number) {
-  return replied.indexOf(id) > -1 || replied_buffer.indexOf(id) > -1
+  return replied.indexOf(id) > -1
+}
+
+function insertToArray (arr: number[], val: number) {
+  if (replied.length >= 200) {
+    replied.splice(0, 1)
+  }
+  replied.push(val)
 }
