@@ -1,0 +1,4 @@
+type: "runtime"
+startup: "npm setup"
+entrypoint: "npm start"
+image: runtime/node
