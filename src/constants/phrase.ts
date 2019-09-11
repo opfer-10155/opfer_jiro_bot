@@ -1,7 +1,7 @@
 import fs = require('fs');
 
-const phrase_path = 'src/constants/phrase/variety.txt'
-const whisper_path = 'src/constants/phrase/whisper.txt'
+const phrase_path = './variety.txt'
+const whisper_path = './whisper.txt'
 const randomInt = (max: number) => Math.floor(Math.random() * max);
 
 const encode       = { encoding: 'utf-8' }
