@@ -36,8 +36,9 @@ const client = {
    * @returns {Promise<Twitter.ResponseData>}
    */
   reply: (message : string, tweet: any) => {
+    const username = tweet.user.screen_name
     return client.twitter.post(post_tweet, {
-      status: message,
+      status: `@${username} ${message}`,
       in_reply_to_status_id: tweet.id_str,
       auto_populate_reply_metadata: true
     })
@@ -48,16 +49,21 @@ const client = {
    * clientのユーザーのタイムラインを受け取ってArray<Tweet>のPromiseを返す
    * @returns {Promise<Twitter.ResponseData[]>} Object is tweet object
    */
-  getTL: () => {
+  getTL: (count) => {
     return client.twitter.get(get_timeline, {
-      count: 200,
+      count
     })
   },
 
-  search: (keyword: string, since_id?: number) => {
+  /**
+   * ## Standard Search
+   *
+   */
+  search: (query: string, type?: 'mixed' | 'recent' | 'popular', since_id?: string) => {
     return client.twitter.get(search, {
-      count : 200,
-      q     : keyword,
+      count : 100,
+      q     : query,
+      result_type: type,
       since_id
     })
   }

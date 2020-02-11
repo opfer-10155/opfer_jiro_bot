@@ -1,0 +1,7 @@
+[2020-02-11T00:42:08.305] [DEBUG] system - start
+[2020-02-11T00:50:55.970] [ERROR] system - /Users/opf/18B10155/github/opfer_jiro_bot/src/survices/jiro_bot/Users/opf/18B10155/github/opfer_jiro_bot/src/survices/jiro_bot/index.ts
+[2020-02-11T00:50:55.971] [ERROR] system - Uncaught expection
+[2020-02-11T00:50:55.971] [ERROR] system - [ { code: 187, message: 'Status is a duplicate.' } ]
+[2020-02-11T00:51:22.072] [ERROR] system - /Users/opf/18B10155/github/opfer_jiro_bot/src/survices/jiro_bot/Users/opf/18B10155/github/opfer_jiro_bot/src/survices/jiro_bot/index.ts
+[2020-02-11T00:51:22.072] [ERROR] system - Uncaught expection
+[2020-02-11T00:51:22.073] [ERROR] system - [ { code: 187, message: 'Status is a duplicate.' } ]

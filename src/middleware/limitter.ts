@@ -24,15 +24,18 @@ const limitter = {
     switch (type) {
       case TWEET: {
         limitter.tweet_count = 0
+        break
       }
       case GET_TL: {
         limitter.getTL_count = 0
+        break
       }
       case SEARCH: {
         limitter.search_count = 0
+        break
       }
       default: {
-        throw new Error('Unexpected Input')
+        throw new Error(`Unexpected Input ${type}`)
       }
     }
   },
@@ -41,15 +44,18 @@ const limitter = {
     switch (type) {
       case TWEET: {
         limitter.tweet_count++
+        break;
       }
       case GET_TL: {
         limitter.getTL_count++
+        break;
       }
       case SEARCH: {
         limitter.search_count++
+        break;
       }
       default: {
-        throw new Error('Unexpected Input')
+        throw new Error(`Unexpected Input ${type}`)
       }
     }
   }

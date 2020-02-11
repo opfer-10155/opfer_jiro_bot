@@ -1,4 +1,4 @@
-import Timer, { toMS, GETTL_REGULAR } from './timer'
+import logger from './logger'
 
 const Rate_Limit_Exceeded = 88
 
@@ -7,20 +7,19 @@ const Rate_Limit_Exceeded = 88
  * use *.catch(handleError)
  */
 export default function handleError(err: TwitterError) {
-  const now = new Date();
-  console.error("error occured at ", now);
-  console.error(err);
   switch (err.code) {
     case Rate_Limit_Exceeded: {
-      Timer.stop(GETTL_REGULAR)
-      setTimeout(
-        () => Timer.resume(GETTL_REGULAR),
-        toMS.minute(15)
-      )
+      logger.warn(err)
+      // Timer.stop(GETTL_REGULAR)
+      // setTimeout(
+      //   () => Timer.resume(GETTL_REGULAR),
+      //   toMS.minute(15)
+      // )
     }
 
     default: {
-      console.error('Uncaught expection')
+      logger.error('Uncaught expection')
+      logger.error(err)
     }
   }
 }

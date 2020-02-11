@@ -192,7 +192,7 @@ define("middleware/client", ["require", "exports", "twitter"], function (require
         },
         search: function (keyword, since_id) {
             return client.twitter.get(search, {
-                count: 200,
+                count: 3,
                 q: keyword,
                 since_id: since_id
             });
