@@ -3,6 +3,7 @@ import limitter, {TWEET, SEARCH, GET_TL} from './middleware/limitter'
 import Timer, { toMS } from './middleware/timer'
 import jiro_bot_activate from './survices/jiro_bot'
 import unko_bot_activate from './survices/unko_bot'
+import client from './middleware/client'
 
 process.on('uncaughtException', (err: any) => {
   console.error(`Uncaught Expection ${err}`)
@@ -39,8 +40,12 @@ const RESET_TWEET_COUNT = new Timer(
   toMS.hour(3)
 )
 
-RESET_GETTL_COUNT.start()
-RESET_SEARCH_COUNT.start()
-RESET_TWEET_COUNT.start()
-jiro_bot_activate()
-unko_bot_activate()
+client.getTL(200).then(
+  (tweets) => console.log(JSON.stringify(tweets))
+)
+
+// RESET_GETTL_COUNT.start()
+// RESET_SEARCH_COUNT.start()
+// RESET_TWEET_COUNT.start()
+// jiro_bot_activate()
+// unko_bot_activate()
