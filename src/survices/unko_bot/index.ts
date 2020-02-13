@@ -54,8 +54,7 @@ export default (tweets) => {
       if (limitter.canTweet() &&
           judge(tweet)　&&
           tweet.user.screen_name !== my_name
-        )
-      {
+      ) {
         console.log(tweet)
         client.reply(
           'クソですか？',
@@ -69,8 +68,9 @@ export default (tweets) => {
       }
       if (
         limitter.canTweet() &&
-        tweet.in_reply_to_screen_name === my_name)
-      {
+        tweet.in_reply_to_screen_name === my_name &&
+        tweet.user.screen_name !== my_name
+      ) {
         console.log(tweet)
         client.reply(
           '好きになりましたか？',
