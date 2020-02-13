@@ -1,72 +1,69 @@
-import limitter, {TWEET, SEARCH} from '../../middleware/limitter'
-import Timer, { toMS } from '../../middleware/timer'
-import client from '../../middleware/client'
-import Resolver from '../../middleware/resolver'
-import Twitter = require('twitter')
+import limitter, {TWEET, SEARCH, GET_TL} from '../../commons/limitter'
+import Timer, { toMS } from '../../commons/timer'
+import client from '../../commons/client'
 import { judge } from './components/judge'
 import { keywords } from './constants/keywords'
-import Phrases from './constants/phrase'
-import handleError from '../../middleware/handleErrors'
-import logger from '../../middleware/logger'
+import Phrases from './components/phrase'
+import handleError from '../../commons/handleErrors'
+import logger from '../../commons/logger'
+import getMostRecentTweet from '../../commons/getMostRecentTweet'
+import createCache from '../../commons/cache'
 
-const resolver = new Resolver<Twitter.ResponseData>()
-const started_at = new Date()
+// const search_query = "#オプファーは二郎を奢れ"
+// const search_interval = 60 // sec
+// const cache = createCache()
 
-/**
- * ## Run main process every 1 minute
- * 1分に1回TLの取得とリプライを行う。
- */
-const search_query = "#オプファーは二郎を奢れ"
-const search_interval = 20 // sec
-const search_timer = new Timer(
-  () => {
-    if (limitter.canSearch()) {
-      client.search(search_query, 'recent')
-      .then((tweets) => {
-        limitter.countUp(SEARCH)
-        tweets.statuses.forEach(
-          (tweet) => {
-            resolver.addUnresolved(tweet)
-          }
-        )
-      })
-      .catch((err) => {
-        logger.error(__filename)
-        handleError(err)
-      })
+// const resolve = async () => {
+//   if (limitter.canGetTL()/*canSearch()*/) {
+//     const res = await client.search(search_query, 'recent', cache.get('since_id'))
+//     limitter.countUp(GET_TL/*SEARCH*/)
+//     const tweets = res/*.statuses*/
+//     tweets.forEach(tweet => {
+//       if (limitter.canTweet() && !tweet.retweeted) {
+//         const message = judge() ? Phrases.atari : Phrases.hazure_random()
+//         client.reply(message, tweet)
+//         .then(() => limitter.countUp(TWEET))
+//         .catch((err) => {
+//           logger.error(__filename)
+//           handleError(err)
+//         })
+//       }
+//     })
+//     if (tweets.length !== 0) {
+//       console.log(tweets)
+//       const mostRecentTweet = getMostRecentTweet(tweets)
+//       await cache.set('since_id', mostRecentTweet.id_str)
+//     }
+//   }
+// }
+
+// export default async () => {
+//   const firstTweets = await client.getTL(/*search_query, 'recent'*/)
+//   limitter.countUp(GET_TL/*SEARCH*/)
+//   const mostRecentTweet = getMostRecentTweet(firstTweets/*.statuses*/)
+//   await cache.set('since_id', mostRecentTweet.id_str)
+//   /**
+//    * ## Run main process every 1 minute
+//    * 1分に1回TLの取得とリプライを行う。
+//    */
+//   const search_timer = new Timer(
+//     resolve,
+//     toMS.sec(search_interval)
+//   )
+//   search_timer.start()
+// }
+
+export default (tweets) => {
+  tweets.forEach(tweet => {
+    if (limitter.canTweet() && !tweet.retweeted && tweet.text.indexOf('#オプファーは二郎を奢れ')> -1) {
+      console.log(tweet)
+      // const message = judge() ? Phrases.atari : Phrases.hazure_random()
+      // client.reply(message, tweet)
+      // .then(() => limitter.countUp(TWEET))
+      // .catch((err) => {
+      //   logger.error(__filename)
+      //   handleError(err)
+      // })
     }
-  },
-  toMS.sec(search_interval)
-)
-
-const resolve_timer = new Timer(
-  () => resolver.resolve(
-    (tweet) => {
-      if (limitter.canTweet()) {
-        if (
-          !resolver.isResolved(tweet, (a, b) => a.id == b.id) &&
-          !tweet.retweeted
-        ) {
-          client.reply(
-            tweet.user.screen_name,
-            judge() ? Phrases.atari : Phrases.hazure_random(),
-            tweet
-          )
-          .then(() => limitter.countUp(TWEET))
-          .catch((err) => {
-            logger.error(__dirname+__filename)
-            handleError(err)
-            resolver.addUnresolved(tweet)
-          })
-        }
-      }
-    }
-  ),
-  toMS.sec(1)
-)
-
-
-export default function activate() {
-  search_timer.start()
-  resolve_timer.start()
+  })
 }

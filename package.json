@@ -8,7 +8,7 @@
     "build": "tsc src/app.ts --outFile dist/app.js --module amd",
     "start": "node dist/app.js",
     "start-local": "source env/env.sh && npx ts-node src/app.ts",
-    "test": "source env/env.sh && jasmine"
+    "test": "source env/env.sh && jest"
   },
   "keywords": [],
   "author": "opfer_10155",
@@ -18,6 +18,7 @@
     "fs": "0.0.1-security",
     "log4js": "^6.1.1",
     "ts-node": "^8.3.0",
+    "tsconfig": "^7.0.0",
     "twitter": "^1.7.1",
     "typescript": "^3.4.1"
   },
@@ -26,7 +27,10 @@
     "npm": "6.9.0"
   },
   "devDependencies": {
+    "@types/jest": "^25.1.2",
     "dotenv": "^8.1.0",
-    "jasmine": "^3.4.0"
+    "jasmine": "^3.4.0",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.0"
   }
 }

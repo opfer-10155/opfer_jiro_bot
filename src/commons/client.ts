@@ -49,9 +49,10 @@ const client = {
    * clientのユーザーのタイムラインを受け取ってArray<Tweet>のPromiseを返す
    * @returns {Promise<Twitter.ResponseData[]>} Object is tweet object
    */
-  getTL: (count?: number) => {
+  getTL: (count?: number, since_id?: string) => {
     return client.twitter.get(get_timeline, {
-      count
+      count,
+      since_id
     })
   },
 
