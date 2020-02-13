@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "setup": "npm install && npm run build",
-    "build": "tsc src/app.ts --outFile dist/app.js --module amd",
-    "start": "node dist/app.js",
+    "build": "tsc src/app.ts",
+    "start": "ts-node dist/app.js",
     "start-local": "source env/env.sh && npx ts-node src/app.ts",
     "test": "source env/env.sh && jest"
   },
