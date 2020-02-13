@@ -55,15 +55,18 @@ import createCache from '../../commons/cache'
 
 export default (tweets) => {
   tweets.forEach(tweet => {
-    if (limitter.canTweet() && !tweet.retweeted && tweet.text.indexOf('#オプファーは二郎を奢れ')> -1) {
+    if (limitter.canTweet() &&
+      !tweet.retweeted &&
+      tweet.text.indexOf('#オプファーは二郎を奢れ') > -1)
+    {
       console.log(tweet)
-      // const message = judge() ? Phrases.atari : Phrases.hazure_random()
-      // client.reply(message, tweet)
-      // .then(() => limitter.countUp(TWEET))
-      // .catch((err) => {
-      //   logger.error(__filename)
-      //   handleError(err)
-      // })
+      const message = judge() ? Phrases.atari : Phrases.hazure_random()
+      client.reply(message, tweet)
+      .then(() => limitter.countUp(TWEET))
+      .catch((err) => {
+        logger.error(__filename)
+        handleError(err)
+      })
     }
   })
 }

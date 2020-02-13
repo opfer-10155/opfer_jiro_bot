@@ -9,6 +9,8 @@ import logger from '../../commons/logger'
 import search_query from './query'
 import getMostRecentTweet from '../../commons/getMostRecentTweet'
 
+const my_name = "opfer_jiro_bot"
+
 // async () => {
 //   const firstTweets = await client.getTL(200)
 //   let mostRecentTweet = getMostRecentTweet(firstTweets)
@@ -49,32 +51,36 @@ import getMostRecentTweet from '../../commons/getMostRecentTweet'
 export default (tweets) => {
   tweets.forEach(tweet => {
     if (!('retweeted_status' in tweet)) {
-      if (limitter.canTweet() && judge(tweet)) {
+      if (limitter.canTweet() &&
+          judge(tweet)　&&
+          tweet.user.screen_name !== my_name
+        )
+      {
         console.log(tweet)
-        // client.reply(
-        //   'クソですか？',
-        //   tweet
-        // )
-        // .then(() => limitter.countUp(TWEET))
-        // .catch((err) => {
-        //   logger.error(__dirname+__filename)
-        //   handleError(err)
-        // })
+        client.reply(
+          'クソですか？',
+          tweet
+        )
+        .then(() => limitter.countUp(TWEET))
+        .catch((err) => {
+          logger.error(__dirname+__filename)
+          handleError(err)
+        })
       }
       if (
         limitter.canTweet() &&
-        tweet.in_reply_to_screen_name === "opfer_jiro_bot")
+        tweet.in_reply_to_screen_name === my_name)
       {
         console.log(tweet)
-        // client.reply(
-        //   '好きになりましたか？',
-        //   tweet
-        // )
-        // .then(() => limitter.countUp(TWEET))
-        // .catch((err) => {
-        //   logger.error(__filename)
-        //   handleError(err)
-        // })
+        client.reply(
+          '好きになりましたか？',
+          tweet
+        )
+        .then(() => limitter.countUp(TWEET))
+        .catch((err) => {
+          logger.error(__filename)
+          handleError(err)
+        })
       }
     }
   })
