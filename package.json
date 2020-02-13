@@ -6,7 +6,7 @@
   "scripts": {
     "setup": "npm install && npm run build",
     "build": "tsc src/app.ts",
-    "start": "npx ts-node dist/app.ts",
+    "start": "npx ts-node src/app.ts",
     "start-local": "source env/env.sh && npx ts-node src/app.ts",
     "test": "source env/env.sh && jest"
   },
